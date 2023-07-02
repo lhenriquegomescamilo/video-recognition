@@ -1,3 +1,5 @@
+package com.camilo
+
 import nu.pattern.OpenCV
 import org.opencv.core.Core
 import org.opencv.core.Mat
@@ -9,6 +11,7 @@ import org.opencv.imgproc.Imgproc
 import org.opencv.objdetect.CascadeClassifier
 import org.opencv.videoio.VideoCapture
 
+const val ESC_KEY = 27
 fun main() {
     OpenCV.loadShared()
     val camera = VideoCapture(0).takeIf { it.isOpened }
@@ -20,6 +23,7 @@ fun main() {
     val frame = Mat()
     val windowName = "Live Video"
     val classifier = CascadeClassifier("haarcascade_frontalface_default.xml")
+
     while (true) {
         camera.read(frame)
         if (frame.empty()) {
@@ -37,7 +41,8 @@ fun main() {
         }
 
         imshow(windowName, frame)
-        if (waitKey(1) == 27) {
+
+        if (waitKey(1) == ESC_KEY) {
             break
         }
     }
